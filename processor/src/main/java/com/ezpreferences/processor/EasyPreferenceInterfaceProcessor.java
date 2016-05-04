@@ -1,3 +1,19 @@
+/**
+ * Copyright (C) hujinrong. hujinrong888@gmail.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed To in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ */
 package com.ezpreferences.processor;
 
 import com.ezpreferences.interfaces.EasyPreferenceInterface;
@@ -36,7 +52,7 @@ public class EasyPreferenceInterfaceProcessor extends BaseProcessor {
 
             TypeElementEntity typeEntity = new TypeElementEntity(typeElement);
             entities.add(typeEntity);
-
+            mLogger.n("before find elements");
             List<Element> methodElements = getMethodElements(typeElement);
             for(int i = 0 ; i < methodElements.size() ;i++ ) {
                 ExecutableElement executableElement = (ExecutableElement) methodElements.get(i);
@@ -47,6 +63,7 @@ public class EasyPreferenceInterfaceProcessor extends BaseProcessor {
                 entities.add(executableEntity);
             }
 
+            mLogger.n("after find elements");
             mLogger.n("before validate");
 
             //validate
@@ -57,14 +74,19 @@ public class EasyPreferenceInterfaceProcessor extends BaseProcessor {
             }
             mLogger.n("after validate");
 
-            IMaker<TypeSpec> classSpecMakerIMaker = new ClassSpecMaker(typeEntity,mElements);
 
+            mLogger.n("before generate.");
+            IMaker<TypeSpec> classSpecMakerIMaker = new ClassSpecMaker(typeEntity,mElements);
+            TypeSpec typeSpec = classSpecMakerIMaker.make() ;
+            mLogger.n("after generate.");
             try {
-                JavaFile javaFile = JavaFile.builder(typeEntity.getPackageElement().getQualifiedName().toString(), classSpecMakerIMaker.make())
+                JavaFile javaFile = JavaFile.builder(typeEntity.getPackageElement().getQualifiedName().toString(), typeSpec )
                         .build();
                 javaFile.writeTo(mFiler);
             }catch(Throwable throwable) {
                 mLogger.e(throwable.getMessage());
+                mLogger.e("write java file error.");
+                return false ;
             }
 
         }

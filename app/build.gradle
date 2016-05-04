@@ -28,4 +28,6 @@ dependencies {
     //    apt files('libs/eapreferences_processor.jar')
     apt project(':processor')
     compile project(':library')
+//    compile 'com.github.JeromeGL.EasyPreferences:library:V0.2'
+//    apt 'com.github.JeromeGL.EasyPreferences:processor:V0.2'
 }

@@ -25,7 +25,6 @@ public interface Configuration {
     String getCurrentVersionName();
 
 
-
     void setLastSaveTime(long time);
     long getLastSaveTime();
 

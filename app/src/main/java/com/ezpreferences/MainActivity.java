@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testConfiguration() {
-        configuration = new Configuration_(this);
+        Configuration  configuration = new Configuration_(this);
         long lastSaveTime = configuration.getLastSaveTime() ;
         if( lastSaveTime == 0 ) {
             configuration.setLastSaveTime(System.currentTimeMillis());
