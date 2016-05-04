@@ -24,7 +24,8 @@ android {
 dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.0.1'
-//    compile files('libs/eapreferences_library.jar')
-//    apt files('libs/eapreferences_processor.jar')
-    compile 'com.github.JeromeGL:EasyPreferences:0.1'
+    //    compile files('libs/eapreferences_library.jar')
+    //    apt files('libs/eapreferences_processor.jar')
+    apt project(':processor')
+    compile project(':library')
 }
